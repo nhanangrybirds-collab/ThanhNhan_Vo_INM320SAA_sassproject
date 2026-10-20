@@ -7,7 +7,7 @@
     "serve": "lite-server --baseDir=\"public\"",
     "start": "concurrently \"npm run sass\" \"npm run serve\""
   },
-  "author": "your name here",
+  "author": "Thanh Nhan Vo",
   "license": "private",
   "private": true,
   "devDependencies": {
