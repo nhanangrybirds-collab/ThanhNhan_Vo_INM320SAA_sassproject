@@ -1,0 +1,335 @@
+// ---------------------------------------------------------------
+// Variables
+// ---------------------------------------------------------------
+$font-body: Quando;
+$font-heading: 'Josefin Sans', sans-serif;
+
+$color-text: #787878;
+$color-dark: #111111;
+$color-muted: #999999;
+$color-navy: #324360;
+$color-accent: #35c4ce;
+$color-footer-bg: #eaf2ff;
+$color-footer-text: #989898;
+
+$breakpoint-desktop: 650px;
+
+// ---------------------------------------------------------------
+// Mixins
+// ---------------------------------------------------------------
+
+// Mobile first: wraps styles that only apply from the desktop breakpoint up
+@mixin desktop {
+    @media only screen and (min-width: $breakpoint-desktop) {
+        @content;
+    }
+}
+
+// Flex container with both axes centered
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// Shared look of the heading font
+@mixin heading-font($size: null) {
+    font-family: $font-heading;
+    @if $size {
+        font-size: $size;
+    }
+}
+
+// ---------------------------------------------------------------
+// Base
+// ---------------------------------------------------------------
+body {
+    font-family: $font-body;
+    font-size: 15px;
+    color: $color-text;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+p {
+    margin-bottom: 25px;
+    line-height: 1.6em;
+}
+a {
+    font-weight: 400;
+    text-decoration: none;
+    color: $color-dark;
+    transition: .20s;
+
+    &:hover {
+        color: $color-muted;
+    }
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 25px;
+    margin-bottom: 20px;
+    @include heading-font;
+    font-weight: 400;
+    line-height: 1.3em;
+    word-wrap: break-word;
+    color: $color-dark;
+}
+h1 {
+    font-size: 37px;
+}
+h2 {
+    font-size: 31px;
+}
+h3 {
+    font-size: 26px;
+}
+h4 {
+    font-size: 21px;
+}
+h5 {
+    font-size: 18px;
+}
+h6 {
+    font-size: 15px;
+}
+
+.container {
+    width: 94%;
+    margin: 0 auto;
+
+    @include desktop {
+        width: 90%;
+    }
+}
+
+// ---------------------------------------------------------------
+// Header and main nav
+// ---------------------------------------------------------------
+header {
+    @include heading-font;
+
+    nav {
+        @include desktop {
+            @include flex-center;
+            max-width: 1170px;
+            margin: 0 auto;
+            height: 60px;
+        }
+
+        ul {
+            display: none;
+
+            @include desktop {
+                display: flex;
+            }
+        }
+
+        li {
+            @include desktop {
+                margin: 0 15px;
+                position: relative;
+                line-height: 24px;
+            }
+
+            &.menu-item-has-children > a::after {
+                @include desktop {
+                    margin-left: 7px;
+                    font-family: 'Font Awesome 5 Free';
+                    font-size: 13px;
+                    color: $color-navy;
+                    content: '\f078';
+                }
+            }
+        }
+
+        a {
+            @include desktop {
+                @include heading-font(12px);
+                color: $color-navy;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                font-weight: 900;
+
+                &:hover {
+                    color: $color-accent;
+                }
+            }
+        }
+
+        .current-menu-item a {
+            @include desktop {
+                border-bottom: 2px solid $color-navy;
+            }
+        }
+
+        // sub nav
+        ul ul {
+            @include desktop {
+                visibility: hidden;
+                opacity: 0;
+                display: block;
+                position: absolute;
+                z-index: 9999;
+                left: 0;
+                background: #f0f0f0;
+                transition: all 0.2s ease-out;
+
+                li {
+                    border-top: 1px solid #e9e9e9;
+                    margin: 0;
+                }
+
+                a {
+                    display: block;
+                    color: $color-dark;
+                    min-width: 175px;
+                    margin: 0;
+                    padding: 20px 10px;
+                    line-height: 1.4em;
+                    letter-spacing: 1px;
+                    transition: .35s;
+
+                    &:hover {
+                        background: #ffffff;
+                        color: #000;
+                    }
+                }
+            }
+        }
+
+        ul li:hover ul {
+            @include desktop {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.top-logo {
+    width: 200px;
+    margin: 20px auto 40px;
+}
+
+// ---------------------------------------------------------------
+// Posts
+// ---------------------------------------------------------------
+article {
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .image-part {
+        margin-bottom: 10px;
+
+        @include desktop {
+            flex: 1;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        img {
+            @include desktop {
+                transition: transform 3.5s ease-in-out;
+
+                &:hover {
+                    transform: scale(1.5, 1.5);
+                }
+            }
+        }
+    }
+
+    .content-part {
+        @include desktop {
+            flex: 1;
+            padding-left: 50px;
+        }
+    }
+
+    .post-title {
+        margin-top: 0;
+
+        a {
+            color: $color-navy;
+            text-transform: uppercase;
+            font-size: 26px;
+            font-weight: 900;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            line-height: 1.3em;
+            transition: all .3s ease;
+
+            &:hover {
+                color: $color-accent;
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------
+// Footer
+// ---------------------------------------------------------------
+footer {
+    padding: 30px 0;
+    text-align: center;
+    background: $color-footer-bg;
+    color: $color-footer-text;
+
+    a {
+        color: $color-footer-text;
+
+        &:hover {
+            color: $color-dark;
+        }
+    }
+
+    .footer-logo {
+        width: 200px;
+        margin: 20px auto;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .footer-social-links {
+        padding: 20px 0;
+        line-height: 2em;
+
+        a {
+            margin: 0 10px;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+
+            @include desktop {
+                margin: 0 28px;
+            }
+
+            span {
+                display: none;
+
+                @include desktop {
+                    display: inline;
+                    font-size: 11px;
+                }
+            }
+
+            i {
+                @include desktop {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
+    #footer-copyright {
+        padding: 20px 0;
+        font-size: 12px;
+        color: $color-footer-text;
+    }
+}
